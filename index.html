@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Series Selector</title>
+    <script src="script.js" defer></script>
+    <style>
+        .card { cursor: pointer; padding: 10px; border: 1px solid #ddd; margin: 5px; display: inline-block; }
+    </style>
+</head>
+<body>
+    <h1>Select a Series</h1>
+    <div id="seriesContainer"></div>
+    <div id="episodeSelection" style="display:none;">
+        <h2 id="selectedSeries"></h2>
+        <input type="number" id="episodeNumber" placeholder="Enter Episode Number">
+        <button onclick="openEpisode()">Go</button>
+    </div>
+    <script>
+        const configFile = "series.json";
+    </script>
+</body>
+</html>
