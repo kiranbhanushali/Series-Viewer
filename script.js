@@ -3,32 +3,42 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(response => response.json())
         .then(data => {
             const container = document.getElementById("seriesContainer");
-            Object.keys(data).forEach(series => {
+            data.forEach(series => {
                 const div = document.createElement("div");
                 div.className = "card";
-                div.innerText = series;
-                div.onclick = () => showEpisodes(series, data[series]);
+                div.innerText = series.name;
+                div.onclick = () => {
+                    history.pushState({}, "", `/${series.name.replace(/\s+/g, "-")}`);
+                    showEpisodes(series);
+                };
                 container.appendChild(div);
             });
         });
 });
 
-function showEpisodes(series, episodes) {
-    document.getElementById("selectedSeries").innerText = `Select Episode for ${series}`;
+function showEpisodes(series) {
+    document.getElementById("selectedSeries").innerText = `Select Episode for ${series.name}`;
     document.getElementById("episodeSelection").style.display = "block";
-    document.getElementById("episodeNumber").dataset.series = series;
-    document.getElementById("episodeNumber").dataset.episodes = JSON.stringify(episodes);
+    document.getElementById("episodeSearch").dataset.episodes = JSON.stringify(series.episodes);
+    
+    document.getElementById("episodeSearch").oninput = function () {
+        const query = this.value.toLowerCase();
+        const episodes = JSON.parse(this.dataset.episodes);
+        const filtered = episodes.filter(ep => ep.episodeNumber.toLowerCase().includes(query));
+        displayEpisodes(filtered);
+    };
 }
 
-function openEpisode() {
-    const episodeNum = document.getElementById("episodeNumber").value.trim();
-    const series = document.getElementById("episodeNumber").dataset.series;
-    const episodes = JSON.parse(document.getElementById("episodeNumber").dataset.episodes);
+function displayEpisodes(episodes) {
+    const episodeList = document.getElementById("episodeList");
+    episodeList.innerHTML = "";
+    episodeList.style.display = episodes.length ? "block" : "none";
 
-    const episode = episodes.find(ep => ep.episode === episodeNum);
-    if (episode) {
-        window.open(episode.url, "_blank");
-    } else {
-        alert("Episode not found.");
-    }
+    episodes.forEach(ep => {
+        const div = document.createElement("div");
+        div.className = "episode-item";
+        div.innerText = ep.episodeNumber;
+        div.onclick = () => window.open(ep.url, "_blank");
+        episodeList.appendChild(div);
+    });
 }
