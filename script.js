@@ -25,9 +25,11 @@ function filterEpisodes() {
     const episodes = JSON.parse(document.getElementById("episodeSearch").dataset.series);
     const episodeList = document.getElementById("episodeList");
     
+
     episodeList.innerHTML = ""; 
     episodes
         .filter(ep => ep.episodeNumber.toLowerCase().includes(searchText))
+        .sort((a, b) => a.episodeNumber.localeCompare(b.episodeNumber, undefined, { numeric: true }))
         .forEach(ep => {
             const div = document.createElement("div");
             div.className = "episode";
