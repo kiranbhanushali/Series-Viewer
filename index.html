@@ -6,20 +6,80 @@
     <title>Series Selector</title>
     <script src="script.js" defer></script>
     <style>
-        .card { cursor: pointer; padding: 10px; border: 1px solid #ddd; margin: 5px; display: inline-block; }
-        .episode { cursor: pointer; padding: 5px; border: 1px solid #ccc; margin: 2px; }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .card {
+            cursor: pointer;
+            padding: 15px;
+            border: 1px solid #ddd;
+            margin: 10px;
+            background: #007BFF;
+            color: white;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+        .card:hover {
+            background: #0056b3;
+        }
+        .episode {
+            cursor: pointer;
+            padding: 10px;
+            border: 1px solid #ccc;
+            margin: 5px;
+            background: #28a745;
+            color: white;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+        .episode:hover {
+            background: #1e7e34;
+        }
+        input {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        @media (max-width: 600px) {
+            .card, .episode {
+                width: 90%;
+                display: block;
+                margin: 10px auto;
+            }
+            input {
+                width: 90%;
+            }
+        }
     </style>
 </head>
 <body>
-    <h1>Select a Series</h1>
-    <div id="seriesContainer"></div>
-    <div id="episodeSelection" style="display:none;">
-        <h2 id="selectedSeries"></h2>
-        <input type="text" id="episodeSearch" placeholder="Enter Episode Number" oninput="filterEpisodes()">
-        <div id="episodeList"></div>
+    <div class="container">
+        <h1>Select a Series</h1>
+        <div id="seriesContainer"></div>
+        <div id="episodeSelection" style="display:none;">
+            <h2 id="selectedSeries"></h2>
+            <input type="text" id="episodeSearch" placeholder="Enter Episode Number" oninput="filterEpisodes()">
+            <div id="episodeList"></div>
+        </div>
     </div>
     <script>
-        const configFile = "series.json";
+        const configFile = "series_data.json";
     </script>
 </body>
 </html>
